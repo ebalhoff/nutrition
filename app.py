@@ -10,10 +10,9 @@ app = Flask(__name__)
 USER = getenv("user")
 PASSWORD = getenv("password")
 HOST = getenv("host")
-PORT = getenv("port")
 DBNAME = getenv("dbname")
 
-DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
+DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}/{DBNAME}?sslmode=require"
 
 engine = create_engine(DATABASE_URL)
 
