@@ -4,11 +4,11 @@ from os import getenv
 
 app = Flask(__name__)
 
-USER = os.getenv("user")
-PASSWORD = os.getenv("password")
-HOST = os.getenv("host")
-PORT = os.getenv("port")
-DBNAME = os.getenv("dbname")
+USER = getenv("user")
+PASSWORD = getenv("password")
+HOST = getenv("host")
+PORT = getenv("port")
+DBNAME = getenv("dbname")
 
 DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
 
