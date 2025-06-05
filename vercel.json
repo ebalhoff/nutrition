@@ -1,5 +1,5 @@
 {
-  "framework": "flask",
+  "framework": null,
   "routes": [
     { "src": "/usda", "dest": "/app.py" },
     { "src": "/usda/filter/(.*)", "dest": "/app.py" }
