@@ -1,0 +1,17 @@
+{
+  "framework": "flask",
+  "routes": [
+    { "src": "/usda", "dest": "/app.py" },
+    { "src": "/usda/filter/(.*)", "dest": "/app.py" }
+  ],
+  "builds": [
+    {
+      "src": "/app.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "/templates/(.*)",
+      "use": "@vercel/static"
+    }
+  ]
+}
