@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, render_template
 from sqlalchemy import create_engine, text
 from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
