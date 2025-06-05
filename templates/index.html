@@ -4,6 +4,7 @@
     <title>USDA Nutrient Search</title>
 </head>
 <body>
+    {% raw %}
     <div id="app" v-if="mounted">
         <input v-model="query" @input="search" placeholder="Search nutrient or food">
 	<button @click="search">Search</button>
@@ -16,6 +17,7 @@
 	</template>
         <p v-else>No results yet. Enter a search query.</p>
     </div>
+    {% endraw %}
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script>
