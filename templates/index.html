@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>USDA Nutrient Search</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
     <div id="app">
         <input v-model="query" @input="search" placeholder="Search nutrient or food">
 	<button @click="search">Search</button>
         <ul v-if="results && results.length">
-	    <p> {{ results.length }} </p>
             <li v-for="item in results" :key="item.fdcId">
                 {{ item.description }} - {{ item.nutrients }}
             </li>
         </ul>
         <p v-else>No results yet. Enter a search query.</p>
     </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script>
         const { createApp, ref } = Vue;
         createApp({
@@ -31,6 +31,7 @@
                         results.value = [];
                     }
                 };
+		console.log('results ref:', results);
                 return { query, results, search };
             }
         }).mount('#app');
