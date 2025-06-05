@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, render_template
-import sqlite3
+from sqlalchemy import create_engine, text
+from os import getenv
 
 app = Flask(__name__)
+engine = create_engine(getenv('POSTGRES_URL'), echo=False)
 
 @app.route('/usda')
 def index():
@@ -9,12 +11,17 @@ def index():
 
 @app.route('/usda/filter/<query>')
 def filter_data(query):
-    conn = sqlite3.connect('usda.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT fdcId, description, nutrients FROM foods WHERE description LIKE ? OR nutrients LIKE ?", (f'%{query}%', f'%{query}%'))
-    data = cursor.fetchall()
-    conn.close()
-    return jsonify(data)
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(
+                text("SELECT fdc_id, description, nutrients FROM foods WHERE description ILIKE :query OR nutrients ILIKE :query"),
+                {"query": f"%{query}%"}
+            )
+            data = [{"fdcId": row[0], "description": row[1], "nutrients": row[2]} for row in result]
+        return jsonify(data)
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify([])
 
 if __name__ == '__main__':
     app.run()
