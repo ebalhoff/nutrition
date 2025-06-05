@@ -7,10 +7,10 @@ load_dotenv()
 
 app = Flask(__name__)
 
-USER = getenv("user")
-PASSWORD = getenv("password")
-HOST = getenv("host")
-DBNAME = getenv("dbname")
+USER = getenv("POSTGRES_USER")
+PASSWORD = getenv("POSTGRES_PASSWORD")
+HOST = getenv("POSTGRES_HOST")
+DBNAME = getenv("POSTGRES_DATABASE")
 
 DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}/{DBNAME}?sslmode=require"
 
