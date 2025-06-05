@@ -8,6 +8,7 @@
     <div id="app">
         <input v-model="query" @input="search" placeholder="Search nutrient or food">
         <ul v-if="results.length">
+	    <p> {{ results.length }} </p>
             <li v-for="item in results" :key="item.fdcId">
                 {{ item.description }} - {{ item.nutrients }}
             </li>
