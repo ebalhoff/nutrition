@@ -18,7 +18,7 @@ engine = create_engine(DATABASE_URL)
 
 @app.route('/usda')
 def index():
-    return render_template('index.html')  # Serves single-page UI
+    return render_template('index.html', results=[])  # Serves single-page UI
 
 @app.route('/usda/filter/<query>')
 def filter_data(query):
