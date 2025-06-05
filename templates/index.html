@@ -7,11 +7,12 @@
 <body>
     <div id="app">
         <input v-model="query" @input="search" placeholder="Search nutrient or food">
-        <ul>
+        <ul v-if="results.length">
             <li v-for="item in results" :key="item.fdcId">
                 {{ item.description }} - {{ item.nutrients }}
             </li>
         </ul>
+        <p v-else>No results yet. Enter a search query.</p>
     </div>
     <script>
         const { createApp, ref } = Vue;
@@ -21,8 +22,13 @@
                 const results = ref([]);
                 const search = async () => {
                     if (query.value) {
-                        const response = await fetch(`/usda/filter/${query.value}`);
-                        results.value = await response.json();
+                        try {
+                            const response = await fetch(`/usda/filter/${encodeURIComponent(query.value)}`);
+                            results.value = await response.json();
+                        } catch (error) {
+                            console.error('Error fetching data:', error);
+                            results.value = [];
+                        }
                     } else {
                         results.value = [];
                     }
