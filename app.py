@@ -18,7 +18,34 @@ engine = create_engine(DATABASE_URL)
 
 @app.route('/usda')
 def index():
-    return render_template('index.html')  # Serves single-page UI
+    return """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <script src="https://unpkg.com/vue@3"></script>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <ul v-if="results && results.length">
+                <li v-for="item in results" :key="item.fdcId">
+                    {{ item.description }} - {{ item.nutrients }}
+                </li>
+            </ul>
+            <p v-else>No results yet</p>
+        </div>
+        <script>
+            const { createApp, ref } = Vue;
+            createApp({
+                setup() {
+                    const results = ref([]);
+                    return { results };
+                }
+            }).mount('#app');
+        </script>
+    </body>
+    </html>
+    """
+    #return render_template('index.html')  # Serves single-page UI
 
 @app.route('/usda/filter/<query>')
 def filter_data(query):
