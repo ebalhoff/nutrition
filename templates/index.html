@@ -5,7 +5,7 @@
 </head>
 <body>
     {% raw %}
-    <div id="app" v-if="mounted">
+    <div id="app">
         <input v-model="query" @input="search" placeholder="Search nutrient or food">
 	<button @click="search">Search</button>
 	<template v-if="results && results.length">
@@ -24,8 +24,6 @@
         const { createApp, ref } = Vue;
         createApp({
             setup() {
-		const mounted = ref(false);
-		onMounted(() => { mounted.value = true; });
                 const query = ref('');
                 const results = ref([]);
                 const search = async () => {
@@ -38,7 +36,7 @@
                     }
                 };
 		console.log('results ref:', results);
-                return { query, results, search, mounted };
+                return { query, results, search };
             }
         }).mount('#app');
     </script>
