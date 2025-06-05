@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USDA Nutrient Search</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-model="query" @input="search" placeholder="Search nutrient or food">
+        <ul>
+            <li v-for="item in results" :key="item.fdcId">
+                {{ item.description }} - {{ item.nutrients }}
+            </li>
+        </ul>
+    </div>
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            setup() {
+                const query = ref('');
+                const results = ref([]);
+                const search = async () => {
+                    if (query.value) {
+                        const response = await fetch(`/usda/filter/${query.value}`);
+                        results.value = await response.json();
+                    } else {
+                        results.value = [];
+                    }
+                };
+                return { query, results, search };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
